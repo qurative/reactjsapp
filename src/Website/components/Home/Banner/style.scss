@@ -1,0 +1,9 @@
+.slider-wrapper {
+  height: 400px;
+}
+
+@media screen and (max-width: 992px) {
+  .slider-wrapper {
+    height: 100%;
+  }
+}
