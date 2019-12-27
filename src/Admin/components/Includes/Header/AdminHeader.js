@@ -9,62 +9,44 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import Hidden from '@material-ui/core/Hidden';
 import styles from './styles';
+import Typography from "@material-ui/core/Typography";
+import {makeStyles} from "@material-ui/core";
 
-class AdminHeader extends React.Component {
-    state = {
-        open: false,
-    };
+const useStyles = makeStyles(theme => ({
+    appBar: {
+        position: "fixed",
+        width: "100%",
+        zIndex: 1400
+    },
+    menuButton: {
+        marginLeft: 12,
+        marginRight: 20
+    },
+}));
 
-    render() {
-        const {
-            classes,
-            toggleDrawerOpen,
-            margin,
-            turnDarker,
-        } = this.props;
-        return (
-            <AppBar
-                className={
-                    classNames(
-                        classes.appBar,
-                        margin && classes.appBarShift,
-                        classes.appbar,
-                        turnDarker && classes.darker
-                    )
-                }
-            >
-                <Toolbar disableGutters={!this.state.open}>
-                    <IconButton
-                        className={classes.menuButton}
-                        color="inherit"
-                        aria-label="Menu"
-                        onClick={toggleDrawerOpen}
-                    >
-                        <MenuIcon />
-                    </IconButton>
-                    <div className={classes.flex}>
-                        <div className={classes.wrapper}>
-                            <div className={classes.search}>
-                                <SearchIcon />
-                            </div>
-                            <input className={classes.input} placeholder="Search" />
-                        </div>
-                    </div>
-                    <Hidden xsDown>
-                        <span className={classes.separatorV} />
-                    </Hidden>
-                    {/*<UserMenu />*/}
-                </Toolbar>
-            </AppBar>
-        );
-    }
-}
-
-AdminHeader.propTypes = {
-    classes: PropTypes.object.isRequired,
-    /*toggleDrawerOpen: PropTypes.func.isRequired,
-    margin: PropTypes.bool.isRequired,*/
-    // turnDarker: PropTypes.bool.isRequired,
+const AdminHeader = (props) => {
+    const classes = useStyles();
+    return (
+        <AppBar className={classes.appBar} elevation={0}>
+            <Toolbar disableGutters={true}>
+                <IconButton
+                    color="inherit"
+                    aria-label="Open drawer"
+                    onClick={props.handleDrawerToggle}
+                    className={classes.menuButton}
+                >
+                    <MenuIcon />
+                </IconButton>
+                <Typography variant="title" color="inherit" noWrap>
+                    {process.env.REACT_APP_NAME || 'ReactJS ADMIN'}
+                </Typography>
+            </Toolbar>
+        </AppBar>
+    )
 };
 
-export default withStyles(styles)(AdminHeader);
+AdminHeader.propTypes = {
+    handleDrawerToggle: PropTypes.func.isRequired,
+};
+
+export default AdminHeader;

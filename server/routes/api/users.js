@@ -60,7 +60,7 @@ router.post("/login", (req, res) => {
     User.findOne({ email }).then(user => {
         // Check if user exists
         if (!user) {
-            return res.status(404).json({ emailnotfound: "Email not found" });
+            return res.status(404).json({ emailnotfound: "User does not exist with provided data." });
         }
 // Check password
         bcrypt.compare(password, user.password).then(isMatch => {
@@ -79,6 +79,9 @@ router.post("/login", (req, res) => {
                         expiresIn: 31556926 // 1 year in seconds
                     },
                     (err, token) => {
+                        /*if (err) {
+
+                        }*/
                         res.json({
                             success: true,
                             token: "Bearer " + token
@@ -88,7 +91,7 @@ router.post("/login", (req, res) => {
             } else {
                 return res
                     .status(400)
-                    .json({ passwordincorrect: "Password incorrect" });
+                    .json({ passwordincorrect: "Entered password is incorrect" });
             }
         });
     });

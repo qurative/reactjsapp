@@ -26,4 +26,4 @@ app.use("/api/users", users);
     res.send('Hello World');
 });*/
 
-app.listen(port, () => console.log(`Example app listening on port ${port}!`));
+app.listen(port, () => console.log(`${process.env.REACT_APP_NAME || 'App'} listening on port ${port}!`));

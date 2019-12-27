@@ -1,72 +1,148 @@
-import React, { Fragment } from 'react';
+import React  from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
-import classNames from 'classnames';
-import Hidden from '@material-ui/core/Hidden';
-import Drawer from '@material-ui/core/Drawer';
-import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
+import List from "@material-ui/core/List";
+import {Button, Collapse, ListItem, ListItemIcon, ListItemText, makeStyles} from "@material-ui/core";
+import Typography from "@material-ui/core/Typography";
+import Divider from "@material-ui/core/Divider";
+import Drawer from "@material-ui/core/Drawer";
+import IconExpandLess from '@material-ui/icons/ExpandLess'
+import IconExpandMore from '@material-ui/icons/ExpandMore'
+import IconDashboard from '@material-ui/icons/Dashboard'
+import IconShoppingCart from '@material-ui/icons/ShoppingCart'
+import IconPeople from '@material-ui/icons/People'
+import IconBarChart from '@material-ui/icons/BarChart'
+import IconLibraryBooks from '@material-ui/icons/LibraryBooks'
+const drawerWidth = 240;
 
-import styles from './sidebar-jss';
-import AdminMenu from "./AdminMenu";
+const useStyles = makeStyles(theme => ({
+    drawerPaper: {
+        position: "fixed",
+        width: drawerWidth,
+        top: theme.spacing.unit * 8, // push content down to fix scrollbar position
+        height: "calc(100% - " + 64 * 2 + "px)", // subtract appbar height
+        background: '#535454',
+        color: '#fff',
 
-class AdminLeftBar extends React.Component {
-    state = {
-        anchor: 'left'
-    };
-
-    render() {
-        const { anchor } = this.state;
-        const {
-            classes,
-            open,
-            toggleDrawerOpen,
-            loadTransition,
-            turnDarker
-        } = this.props;
-        return (
-            <Fragment>
-                <Hidden lgUp>
-                    <SwipeableDrawer
-                        onClose={toggleDrawerOpen}
-                        onOpen={toggleDrawerOpen}
-                        open={!open}
-                        anchor={anchor}
-                    >
-                        <AdminMenu
-                            drawerPaper
-                            toggleDrawerOpen={toggleDrawerOpen}
-                            loadTransition={loadTransition}
-                        />
-                    </SwipeableDrawer>
-                </Hidden>
-                <Hidden mdDown>
-                    <Drawer
-                        variant="permanent"
-                        onClose={toggleDrawerOpen}
-                        classes={{
-                            paper: classNames(classes.drawer, classes.drawerPaper, !open ? classes.drawerPaperClose : ''),
-                        }}
-                        open={open}
-                        anchor={anchor}
-                    >
-                        <AdminMenu
-                            drawerPaper={open}
-                            turnDarker={turnDarker}
-                            loadTransition={loadTransition}
-                        />
-                    </Drawer>
-                </Hidden>
-            </Fragment>
-        );
+    },
+    drawerContent: {
+        overflow: "auto",
+        display: "flex",
+        flexDirection: "column"
+    },
+    drawerList: {
+        width: '100%',
+    },
+    navList: {
+        width: drawerWidth,
+    },
+    menuItem: {
+        width: drawerWidth,
+        '&.active': {
+            background: 'rgba(0, 0, 0, 0.08)',
+            '& .MuiListItemIcon-root': {
+                color: '#fff',
+            },
+        },
+    },
+    menuItemIcon: {
+        color: '#97c05c',
+    },
+    logoutContainer: {
+        // marginTop: "auto",
+        // paddingBottom: "0",
+        position: "fixed",
+        width: drawerWidth,
+        bottom: 0,
+        background: '#535454',
+        color: '#fff',
     }
-}
+}));
+
+const AdminLeftBar = (props) => {
+    const classes = useStyles();
+    const [subMenuOpen, setSubMenuOpen] = React.useState(false)
+
+    function handleClick() {
+        setSubMenuOpen(!subMenuOpen)
+    }
+    return (
+        <Drawer
+            variant="persistent"
+            anchor="left"
+            open={props.open}
+            elevation={2}
+            classes={{
+                paper: classes.drawerPaper
+            }}
+        >
+            <div className={classes.drawerHeader} />
+            <div className={classes.drawerContent}>
+                <List className={classes.drawerList} style={{ flexGrow: 1 }}>
+                    <ListItem button className={classes.menuItem}>
+                        <ListItemIcon className={classes.menuItemIcon}>
+                            <IconDashboard />
+                        </ListItemIcon>
+                        <ListItemText primary="Dashboard" />
+                    </ListItem>
+
+                    <ListItem button className={classes.menuItem}>
+                        <ListItemIcon className={classes.menuItemIcon}>
+                            <IconShoppingCart />
+                        </ListItemIcon>
+                        <ListItemText primary="Orders" />
+                    </ListItem>
+
+                    <ListItem button className={classes.menuItem}>
+                        <ListItemIcon className={classes.menuItemIcon}>
+                            <IconPeople />
+                        </ListItemIcon>
+                        <ListItemText primary="Customers" />
+                    </ListItem>
+
+                    <ListItem button className={classes.menuItem}>
+                        <ListItemIcon className={classes.menuItemIcon}>
+                            <IconBarChart />
+                        </ListItemIcon>
+                        <ListItemText primary="Reports" />
+                    </ListItem>
+                    <ListItem button onClick={handleClick} className={classes.menuItem}>
+                        <ListItemIcon className={classes.menuItemIcon}>
+                            <IconLibraryBooks />
+                        </ListItemIcon>
+                        <ListItemText primary="Nested Pages" />
+                        {subMenuOpen ? <IconExpandLess /> : <IconExpandMore />}
+                    </ListItem>
+                    <Collapse in={subMenuOpen} timeout="auto" unmountOnExit>
+                        <Divider />
+                        <List component="div" disablePadding>
+                            <ListItem button className={classes.menuItem}>
+                                <ListItemText inset primary="Nested Page 1" />
+                            </ListItem>
+                            <ListItem button className={classes.menuItem}>
+                                <ListItemText inset primary="Nested Page 2" />
+                            </ListItem>
+                        </List>
+                    </Collapse>
+                </List>
+                <List className={classes.logoutContainer}>
+                    <Divider />
+                    <ListItem
+                        style={{
+                            // borderBottom: "1px solid black",
+                            display: "flex",
+                            justifyContent: "center"
+                        }}
+                    >
+                        <Button>Logout</Button>
+                    </ListItem>
+                </List>
+            </div>
+        </Drawer>
+    )
+};
 
 AdminLeftBar.propTypes = {
-    classes: PropTypes.object.isRequired,
-    toggleDrawerOpen: PropTypes.func.isRequired,
-    loadTransition: PropTypes.func.isRequired,
-    turnDarker: PropTypes.bool.isRequired,
     open: PropTypes.bool.isRequired,
 };
 
-export default withStyles(styles)(AdminLeftBar);
+export default AdminLeftBar;

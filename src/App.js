@@ -4,10 +4,10 @@ import { Provider } from "react-redux";
 import store from "./redux/store";
 
 import AppRouter from './AppRouter';
-/*import setAuthToken from "./utils/setAuthToken";
+import setAuthToken from "./utils/setAuthToken";
 import jwt_decode from "jwt-decode";
-import {logoutUser, setCurrentUser} from "./redux/actions/authActions";*/
-/*
+import {logoutUser, setCurrentUser} from "./redux/actions/authActions";
+
 // Check for token to keep user logged in
 if (localStorage.jwtToken) {
   // Set auth token header auth
@@ -25,7 +25,7 @@ if (localStorage.jwtToken) {
     // Redirect to login
     window.location.href = "./login";
   }
-}*/
+}
 
 function App() {
   return (
