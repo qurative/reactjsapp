@@ -1,0 +1,20 @@
+.drawer-container {
+  display: flex;
+  flex-direction: row;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.drawer-app-content {
+  flex: auto;
+  overflow: auto;
+}
+.header-open-toggle {
+  width: 80.6% !important;
+}
+.mdc-drawer__header {
+  background-color: #6200EE !important;
+}
+.mdc-drawer__title {
+  color: #fff !important;
+}

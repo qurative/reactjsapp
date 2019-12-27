@@ -215,7 +215,7 @@ export default function Header() {
                         <MenuIcon />
                     </IconButton>
                     <Typography className={classes.title} variant="h6" noWrap>
-                        ReactJS-ADMIN
+                        {process.env.REACT_APP_NAME || 'ReactJS ADMIN'}
                     </Typography>
                     <div className={classes.search}>
                         <div className={classes.searchIcon}>

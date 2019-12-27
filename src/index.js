@@ -5,8 +5,8 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import appTheme from "./theme/default";
-// import dotenv from 'dotenv';
-// dotenv.config();
+import dotenv from 'dotenv';
+dotenv.config();
 
 // ReactDOM.render(<App />, document.getElementById('root'));
 ReactDOM.render(
