@@ -17,7 +17,7 @@ const useStyles = makeStyles(theme => ({
     appBar: {
         position: "fixed",
         width: "100%",
-        zIndex: 1400
+        zIndex: 1200
     },
     menuButton: {
         marginLeft: 12,
@@ -79,7 +79,8 @@ const AdminHeader = (props) => {
             onClose={handleMenuClose}
         >
             <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-            <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+            <MenuItem onClick={handleMenuClose}>Edit Profile</MenuItem>
+            <MenuItem onClick={handleMenuClose}>Logout</MenuItem>
         </Menu>
     );
 
@@ -94,61 +95,9 @@ const AdminHeader = (props) => {
             open={isMobileMenuOpen}
             onClose={handleMobileMenuClose}
         >
-            <MenuItem>
-                <Button
-                    component={Link}
-                    className={classes.button}
-                    raised
-                    color="inherit"
-                    to="/"
-                >
-                    {'Home'}
-                </Button>
-            </MenuItem>
-            <MenuItem>
-                <Button
-                    component={Link}
-                    className={classes.button}
-                    raised
-                    color="inherit"
-                    to="/about"
-                >
-                    {'About'}
-                </Button>
-            </MenuItem>
-            <MenuItem>
-                <Button
-                    component={Link}
-                    className={classes.button}
-                    raised
-                    color="inherit"
-                    to="/login"
-                >
-                    {'Login'}
-                </Button>
-            </MenuItem>
-            <MenuItem>
-                <Button
-                    component={Link}
-                    className={classes.button}
-                    raised
-                    color="inherit"
-                    to="/register"
-                >
-                    {'Register'}
-                </Button>
-            </MenuItem>
-            <MenuItem onClick={handleProfileMenuOpen}>
-                <IconButton
-                    aria-label="account of current user"
-                    aria-controls="primary-search-account-menu"
-                    aria-haspopup="true"
-                    color="inherit"
-                >
-                    <AccountCircle />
-                </IconButton>
-                <p>Profile</p>
-            </MenuItem>
+            <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
+            <MenuItem onClick={handleMenuClose}>Edit Profile</MenuItem>
+            <MenuItem onClick={handleMenuClose}>Logout</MenuItem>
         </Menu>
     );
 
@@ -170,55 +119,9 @@ const AdminHeader = (props) => {
 
                     <div className={classes.grow} />
                     <div className={classes.sectionDesktop}>
-                        {/*<IconButton aria-label="show 4 new mails" color="inherit">
-                            <Badge badgeContent={4} color="secondary">
-                                <MailIcon />
-                            </Badge>
-                        </IconButton>
-                        <IconButton aria-label="show 17 new notifications" color="inherit">
-                            <Badge badgeContent={17} color="secondary">
-                                <NotificationsIcon />
-                            </Badge>
-                        </IconButton>*/}
-
-                        <Button
-                            component={Link}
-                            className={classes.button}
-                            raised
-                            color="inherit"
-                            to="/"
-                        >
-                            {'Home'}
-                        </Button>
-                        <Button
-                            component={Link}
-                            className={classes.button}
-                            raised
-                            color="inherit"
-                            to="/about"
-                        >
-                            {'About'}
-                        </Button>
-                        <Button
-                            component={Link}
-                            className={classes.button}
-                            raised
-                            color="inherit"
-                            to="/login"
-                        >
-                            {'Login'}
-                        </Button>
-                        <Button
-                            component={Link}
-                            className={classes.button}
-                            raised
-                            color="inherit"
-                            to="/register"
-                        >
-                            {'Register'}
-                        </Button>
                         <IconButton
-                            edge="end"
+                            style={{marginRight: '12px'}}
+                            // edge="end"
                             aria-label="account of current user"
                             aria-controls={menuId}
                             aria-haspopup="true"

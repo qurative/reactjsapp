@@ -27,3 +27,5 @@ app.use("/api/users", users);
 });*/
 
 app.listen(port, () => console.log(`${process.env.REACT_APP_NAME || 'App'} listening on port ${port}!`));
+
+require('./seeds/index');
