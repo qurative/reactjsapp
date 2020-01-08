@@ -1,4 +1,5 @@
 import React from 'react';
+import {useHistory} from "react-router-dom";
 import { fade, makeStyles } from '@material-ui/core/styles';
 import {AppBar, Toolbar, Menu, MenuItem, Button, IconButton, Badge, Typography, InputBase} from "@material-ui/core";
 import MenuIcon from '@material-ui/icons/Menu';
@@ -7,9 +8,12 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import MailIcon from '@material-ui/icons/Mail';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
+import LogoutIcon from '@material-ui/icons/ExitToApp';
 import { Link } from 'react-router-dom'
-// import Home from "../Home/Home";
-// import AboutUs from "../Pages/AboutUs";
+import PropTypes from "prop-types";
+import { connect } from 'react-redux';
+import { logoutUser } from "./../../../../redux/actions/authActions";
+import './index.scss';
 
 const useStyles = makeStyles(theme => ({
     grow: {
@@ -19,7 +23,7 @@ const useStyles = makeStyles(theme => ({
         marginRight: theme.spacing(2),
     },
     title: {
-        display: 'none',
+        // display: 'none',
         [theme.breakpoints.up('sm')]: {
             display: 'block',
         },
@@ -34,9 +38,12 @@ const useStyles = makeStyles(theme => ({
         marginRight: theme.spacing(2),
         marginLeft: 0,
         width: '100%',
+        display: 'none',
         [theme.breakpoints.up('sm')]: {
-            marginLeft: theme.spacing(3),
-            width: 'auto',
+            display: 'block',
+            // marginLeft: theme.spacing(3),
+            marginLeft: '25%',
+            width: '18%',
         },
     },
     searchIcon: {
@@ -76,8 +83,9 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-export default function Header() {
+const Header = props => {
     const classes = useStyles();
+    let history = useHistory();
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
@@ -100,6 +108,15 @@ export default function Header() {
     const handleMobileMenuOpen = event => {
         setMobileMoreAnchorEl(event.currentTarget);
     };
+    const navigateToDashboard = () => {
+        history.push('/users/dashboard');
+    };
+
+    const userLogout = e => {
+        e.preventDefault();
+        props.logoutUser();
+        history.push('/login');
+    };
 
     const menuId = 'primary-search-account-menu';
     const renderMenu = (
@@ -112,8 +129,9 @@ export default function Header() {
             open={isMenuOpen}
             onClose={handleMenuClose}
         >
-            <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-            <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+            {/*<MenuItem onClick={handleMenuClose}>Profile</MenuItem>*/}
+            <MenuItem onClick={navigateToDashboard}>My account</MenuItem>
+            <MenuItem onClick={userLogout}><LogoutIcon style={{ color: 'red'}} /> Logout</MenuItem>
         </Menu>
     );
 
@@ -150,70 +168,60 @@ export default function Header() {
                     {'About'}
                 </Button>
             </MenuItem>
-            <MenuItem>
-                <Button
-                    component={Link}
-                    className={classes.button}
-                    raised
-                    color="inherit"
-                    to="/login"
-                >
-                    {'Login'}
-                </Button>
-            </MenuItem>
-            <MenuItem>
-                <Button
-                    component={Link}
-                    className={classes.button}
-                    raised
-                    color="inherit"
-                    to="/register"
-                >
-                    {'Register'}
-                </Button>
-            </MenuItem>
-            {/*<MenuItem>
-                <IconButton aria-label="show 4 new mails" color="inherit">
-                    <Badge badgeContent={4} color="secondary">
-                        <MailIcon />
-                    </Badge>
-                </IconButton>
-                <p>Messages</p>
-            </MenuItem>
-            <MenuItem>
-                <IconButton aria-label="show 11 new notifications" color="inherit">
-                    <Badge badgeContent={11} color="secondary">
-                        <NotificationsIcon />
-                    </Badge>
-                </IconButton>
-                <p>Notifications</p>
-            </MenuItem>*/}
-            <MenuItem onClick={handleProfileMenuOpen}>
-                <IconButton
-                    aria-label="account of current user"
-                    aria-controls="primary-search-account-menu"
-                    aria-haspopup="true"
-                    color="inherit"
-                >
-                    <AccountCircle />
-                </IconButton>
-                <p>Profile</p>
-            </MenuItem>
+            {props.auth.isAuthenticated !== true && (
+                <>
+                    <MenuItem>
+                        <Button
+                            component={Link}
+                            className={classes.button}
+                            raised
+                            color="inherit"
+                            to="/login"
+                        >
+                            {'Login'}
+                        </Button>
+                    </MenuItem>
+                    <MenuItem>
+                        <Button
+                            component={Link}
+                            className={classes.button}
+                            raised
+                            color="inherit"
+                            to="/register"
+                        >
+                            {'Register'}
+                        </Button>
+                    </MenuItem>
+                </>
+            )}
+            {props.auth.isAuthenticated === true && (
+                <MenuItem onClick={handleProfileMenuOpen}>
+                    <IconButton
+                        aria-label="account of current user"
+                        aria-controls="primary-search-account-menu"
+                        aria-haspopup="true"
+                        color="inherit"
+                    >
+                        <AccountCircle />
+                    </IconButton>
+                    <p>Profile</p>
+                </MenuItem>
+            )}
         </Menu>
     );
 
     return (
-        <div className={classes.grow}>
+        <div className={`${classes.grow} app-header`}>
             <AppBar position="static">
                 <Toolbar>
-                    <IconButton
+                    {/*<IconButton
                         edge="start"
                         className={classes.menuButton}
                         color="inherit"
                         aria-label="open drawer"
                     >
                         <MenuIcon />
-                    </IconButton>
+                    </IconButton>*/}
                     <Typography className={classes.title} variant="h6" noWrap>
                         {process.env.REACT_APP_NAME || 'ReactJS ADMIN'}
                     </Typography>
@@ -261,34 +269,40 @@ export default function Header() {
                         >
                             {'About'}
                         </Button>
-                        <Button
-                            component={Link}
-                            className={classes.button}
-                            raised
-                            color="inherit"
-                            to="/login"
-                        >
-                            {'Login'}
-                        </Button>
-                        <Button
-                            component={Link}
-                            className={classes.button}
-                            raised
-                            color="inherit"
-                            to="/register"
-                        >
-                            {'Register'}
-                        </Button>
-                        <IconButton
-                            edge="end"
-                            aria-label="account of current user"
-                            aria-controls={menuId}
-                            aria-haspopup="true"
-                            onClick={handleProfileMenuOpen}
-                            color="inherit"
-                        >
-                            <AccountCircle />
-                        </IconButton>
+                        {props.auth.isAuthenticated !== true && (
+                            <>
+                                <Button
+                                    component={Link}
+                                    className={classes.button}
+                                    raised
+                                    color="inherit"
+                                    to="/login"
+                                >
+                                    {'Login'}
+                                </Button>
+                                <Button
+                                    component={Link}
+                                    className={classes.button}
+                                    raised
+                                    color="inherit"
+                                    to="/register"
+                                >
+                                    {'Register'}
+                                </Button>
+                            </>
+                        )}
+                        {props.auth.isAuthenticated === true && (
+                            <IconButton
+                                edge="end"
+                                aria-label="account of current user"
+                                aria-controls={menuId}
+                                aria-haspopup="true"
+                                onClick={handleProfileMenuOpen}
+                                color="inherit"
+                            >
+                                <AccountCircle />
+                            </IconButton>
+                        )}
                     </div>
                     <div className={classes.sectionMobile}>
                         <IconButton
@@ -307,4 +321,13 @@ export default function Header() {
             {renderMenu}
         </div>
     );
-}
+};
+
+Header.propTypes = {
+    logoutUser: PropTypes.func.isRequired,
+    auth: PropTypes.object.isRequired
+};
+const mapStateToProps = state => ({
+    auth: state.auth
+});
+export default connect(mapStateToProps, {logoutUser})(Header);

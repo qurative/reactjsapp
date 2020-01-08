@@ -5,7 +5,18 @@ import {
     Link
 } from "@material-ui/core";
 import { loadCSS } from 'fg-loadcss';
-import { red } from '@material-ui/core/colors';
+import {
+    indigo,
+    red,
+    cyan
+} from '@material-ui/core/colors';
+import {
+    Facebook,
+    Twitter,
+    LinkedIn,
+    Instagram,
+    YouTube
+} from '@material-ui/icons';
 import './index.scss';
 
 const useStyles = makeStyles(theme => ({
@@ -72,11 +83,11 @@ function Footer() {
                     We offer training and skill building courses across Technology, Design, Management, Science and
                     Humanities.</p>
                 <div className={`${classes.root} footer-icons`}>
-                    <a href="#"><i className="fa fa-facebook"></i></a>
-                    <a href="#"><i className="fa fa-twitter"></i></a>
-                    <a href="#"><i className="fa fa-instagram"></i></a>
-                    <a href="#"><i className="fa fa-linkedin"></i></a>
-                    <a href="#"><i className="fa fa-youtube"></i></a>
+                    <a href="#"><Facebook style={{ color: indigo[500], padding: '5px' }} /></a>
+                    <a href="#"><Twitter style={{ color: cyan[300], padding: '5px' }} /></a>
+                    <a href="#"><Instagram style={{ color: red[500], padding: '5px' }} /></a>
+                    <a href="#"><LinkedIn style={{ color: '#007bb5', padding: '5px' }} /></a>
+                    <a href="#"><YouTube style={{ color: red[700], padding: '5px' }} /></a>
                 </div>
             </div>
             <Copyright />
