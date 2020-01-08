@@ -1,15 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types";
 import classNames from "classnames";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import Typography from "@material-ui/core/Typography";
-import IconButton from "@material-ui/core/IconButton";
-import MenuIcon from "@material-ui/icons/Menu";
 import {makeStyles} from "@material-ui/core";
-import AdminLogin from "../../Admin/components/Auth/Login";
 import AdminLeftBar from "../../Admin/components/Includes/Sidebar/AdminLeftBar";
 import AdminHeader from "../../Admin/components/Includes/Header/AdminHeader";
+import {useHistory} from "react-router-dom";
+import { connect } from 'react-redux';
+import { logoutUser } from "../../redux/actions/authActions";
 const drawerWidth = 240;
 
 const useStyles = makeStyles(theme => ({
@@ -45,17 +42,25 @@ const useStyles = makeStyles(theme => ({
 
 const AdminLayout = props => {
     const classes = useStyles();
+
+    let history = useHistory();
+
     const [open, setOpen] = React.useState(true);
 
     const handleDrawerToggle = () => {
         setOpen(!open);
     };
+    const userLogout = e => {
+        e.preventDefault();
+        props.logoutUser();
+        history.push('/admin/login');
+    };
 
     return (
         <div>
             <div className={classes.appFrame}>
-                <AdminLeftBar open={open} />
-                <AdminHeader handleDrawerToggle={handleDrawerToggle}/>
+                <AdminLeftBar open={open} handleUserLogout={userLogout} userData={props.auth.user} />
+                <AdminHeader handleDrawerToggle={handleDrawerToggle} handleUserLogout={userLogout} userData={props.auth.user} />
                 <div
                     className={classNames(classes.contentWrapper, {
                         [classes.contentShift]: open,
@@ -73,7 +78,12 @@ const AdminLayout = props => {
 
 AdminLayout.propTypes = {
     classes: PropTypes.object.isRequired,
-    theme: PropTypes.object.isRequired
+    theme: PropTypes.object.isRequired,
+    logoutUser: PropTypes.func.isRequired,
+    auth: PropTypes.object.isRequired
 };
+const mapStateToProps = (state) => ({
+    auth: state.auth
+});
 
-export default AdminLayout;
+export default connect(mapStateToProps, {logoutUser})(AdminLayout);

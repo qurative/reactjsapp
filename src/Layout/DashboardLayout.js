@@ -31,7 +31,7 @@ const DashboardLayout = (props) => {
 
     return (
         <div className={classes.root}>
-            <DashHeader open={open} handleDrawerOpen={handleDrawerOpen} pAnchorEl={anchorEl} handleSetAnchorEl={setAnchorEl} />
+            <DashHeader open={open} handleDrawerOpen={handleDrawerOpen} anchorEl={anchorEl} setAnchorEl={setAnchorEl} />
             <AppSideBar handleDrawerClose={handleDrawerClose} open={open}/>
             <main className={classes.content}>
                 <div className={classes.appBarSpacer} />

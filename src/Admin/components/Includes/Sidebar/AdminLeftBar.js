@@ -1,16 +1,18 @@
 import React  from 'react';
 import PropTypes from 'prop-types';
+import {Link} from 'react-router-dom';
 import List from "@material-ui/core/List";
 import {Button, Collapse, ListItem, ListItemIcon, ListItemText, makeStyles} from "@material-ui/core";
 import Divider from "@material-ui/core/Divider";
 import Drawer from "@material-ui/core/Drawer";
-import IconExpandLess from '@material-ui/icons/ExpandLess'
-import IconExpandMore from '@material-ui/icons/ExpandMore'
-import IconDashboard from '@material-ui/icons/Dashboard'
-import IconShoppingCart from '@material-ui/icons/ShoppingCart'
-import IconPeople from '@material-ui/icons/People'
-import IconBarChart from '@material-ui/icons/BarChart'
-import IconLibraryBooks from '@material-ui/icons/LibraryBooks'
+import IconExpandLess from '@material-ui/icons/ExpandLess';
+import IconExpandMore from '@material-ui/icons/ExpandMore';
+import IconDashboard from '@material-ui/icons/Dashboard';
+import IconShoppingCart from '@material-ui/icons/ShoppingCart';
+import IconPeople from '@material-ui/icons/People';
+import IconBarChart from '@material-ui/icons/BarChart';
+import IconLibraryBooks from '@material-ui/icons/LibraryBooks';
+import LogoutIcon from '@material-ui/icons/ExitToApp';
 const drawerWidth = 240;
 
 const useStyles = makeStyles(theme => ({
@@ -18,7 +20,7 @@ const useStyles = makeStyles(theme => ({
         position: "fixed",
         width: drawerWidth,
         top: theme.spacing.unit * 8, // push content down to fix scrollbar position
-        height: "calc(100% - " + 64 * 2 + "px)", // subtract appbar height
+        height: "calc(100% - " + 60 * 2 + "px)", // subtract appbar height
         background: '#535454',
         color: '#fff',
 
@@ -50,10 +52,16 @@ const useStyles = makeStyles(theme => ({
         // marginTop: "auto",
         // paddingBottom: "0",
         position: "fixed",
-        width: drawerWidth,
-        bottom: 0,
+        width: '241px',
+        bottom: '-8px',
         background: '#535454',
+    },
+    logoutButton: {
+        background: theme.palette.primary.light,
         color: '#fff',
+        '&.hover': {
+            background: theme.palette.primary.main
+        },
     }
 }));
 
@@ -77,18 +85,27 @@ const AdminLeftBar = (props) => {
             <div className={classes.drawerHeader} />
             <div className={classes.drawerContent}>
                 <List className={classes.drawerList} style={{ flexGrow: 1 }}>
-                    <ListItem button className={classes.menuItem}>
+                    <ListItem
+                        button
+                        className={classes.menuItem}
+                        component={Link}
+                        to="/admin"
+                    >
                         <ListItemIcon className={classes.menuItemIcon}>
                             <IconDashboard />
                         </ListItemIcon>
                         <ListItemText primary="Dashboard" />
                     </ListItem>
 
-                    <ListItem button className={classes.menuItem}>
+                    <ListItem button
+                              className={classes.menuItem}
+                              component={Link}
+                              to="/settings"
+                    >
                         <ListItemIcon className={classes.menuItemIcon}>
                             <IconShoppingCart />
                         </ListItemIcon>
-                        <ListItemText primary="Orders" />
+                        <ListItemText primary="Settings" />
                     </ListItem>
 
                     <ListItem button className={classes.menuItem}>
@@ -132,7 +149,7 @@ const AdminLeftBar = (props) => {
                             justifyContent: "center"
                         }}
                     >
-                        <Button>Logout</Button>
+                        <Button className={classes.logoutButton} onClick={props.handleUserLogout}><LogoutIcon fontSize={"small"} /> Logout</Button>
                     </ListItem>
                 </List>
             </div>
@@ -142,6 +159,8 @@ const AdminLeftBar = (props) => {
 
 AdminLeftBar.propTypes = {
     open: PropTypes.bool.isRequired,
+    handleUserLogout: PropTypes.func.isRequired,
+    userData: PropTypes.object.isRequired,
 };
 
 export default AdminLeftBar;

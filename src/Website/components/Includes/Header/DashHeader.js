@@ -52,12 +52,12 @@ const DashHeader = props => {
     const classes = useStyles();
     let history = useHistory();
 
-    const isMenuOpen = Boolean(props.pAnchorEl);
+    const isMenuOpen = Boolean(props.anchorEl);
     const handleMenuOpen = event => {
-        props.handleSetAnchorEl(event.currentTarget);
+        props.setAnchorEl(event.currentTarget);
     };
     const handleMenuClose = () => {
-        props.handleSetAnchorEl(null);
+        props.setAnchorEl(null);
     };
     const navigateToDashboard = () => {
         history.push('/users/dashboard');
@@ -148,4 +148,4 @@ const mapStateToProps = (state) => ({
     auth: state.auth
 });
 
-export default connect(mapStateToProps)(DashHeader);
+export default connect(mapStateToProps, {logoutUser})(DashHeader);

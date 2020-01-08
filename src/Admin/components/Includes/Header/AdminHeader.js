@@ -2,14 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import {Button, IconButton, Menu, MenuItem} from '@material-ui/core';
+import {IconButton, Menu, MenuItem} from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import MoreIcon from '@material-ui/icons/MoreVert';
-import SaveIcon from '@material-ui/icons/Save';
-import EditIcon from '@material-ui/icons/Edit';
+import LogoutIcon from "@material-ui/icons/ExitToApp";
 import Typography from "@material-ui/core/Typography";
 import {makeStyles} from "@material-ui/core";
-import {Link} from "react-router-dom";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import './index.scss';
 
@@ -43,7 +41,7 @@ const useStyles = makeStyles(theme => ({
 
 const AdminHeader = (props) => {
     const classes = useStyles();
-
+    const { userData } = props;
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
@@ -80,7 +78,7 @@ const AdminHeader = (props) => {
         >
             <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
             <MenuItem onClick={handleMenuClose}>Edit Profile</MenuItem>
-            <MenuItem onClick={handleMenuClose}>Logout</MenuItem>
+            <MenuItem onClick={props.handleUserLogout}><LogoutIcon /> Logout</MenuItem>
         </Menu>
     );
 
@@ -97,7 +95,7 @@ const AdminHeader = (props) => {
         >
             <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
             <MenuItem onClick={handleMenuClose}>Edit Profile</MenuItem>
-            <MenuItem onClick={handleMenuClose}>Logout</MenuItem>
+            <MenuItem onClick={props.handleUserLogout}><LogoutIcon /> Logout</MenuItem>
         </Menu>
     );
 
@@ -128,7 +126,7 @@ const AdminHeader = (props) => {
                             onClick={handleProfileMenuOpen}
                             color="inherit"
                         >
-                            <AccountCircle />
+                            <AccountCircle /> <Typography component={`span`}> &nbsp;{userData.name}</Typography>
                         </IconButton>
                     </div>
                     <div className={classes.sectionMobile}>
@@ -152,6 +150,8 @@ const AdminHeader = (props) => {
 
 AdminHeader.propTypes = {
     handleDrawerToggle: PropTypes.func.isRequired,
+    handleUserLogout: PropTypes.func.isRequired,
+    userData: PropTypes.object.isRequired,
 };
 
 export default AdminHeader;
