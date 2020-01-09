@@ -1,83 +1,75 @@
-import React from 'react';
-import Table from "@material-ui/core/Table";
-import TableBody from "@material-ui/core/TableBody";
-import TableCell from "@material-ui/core/TableCell";
-import TableHead from "@material-ui/core/TableHead";
-import TableRow from "@material-ui/core/TableRow";
-import Paper from "@material-ui/core/Paper";
+import React from "react";
+import MUIDataTable from "mui-datatables";
 
-export default function SettingComponent() {
-    let id = 0;
-    const createData = (name, calories, fat, carbs, protein) => {
-        id += 1;
-        return { id, name, calories, fat, carbs, protein };
-    };
-    const rows = [
-        createData(
-            "Frozen yoghurt sdafdfdssfdfsdsdsfdsfdsfsfdfsd sd fsdfsdfsdsfdsfd",
-            159,
-            6.0,
-            24,
-            4.0
-        ),
-        createData(
-            "Ice cream sandwichdsfsdfsdf dfssdfsdafsad asffsd asfds df",
-            237,
-            9.0,
-            37,
-            4.3
-        ),
-        createData(
-            "Eclairsdfas fdsdfsadfasfd fs dafsd fsdsfdafdsfds fsd sf dsfd asfd sfdasdfsfd",
-            262,
-            16.0,
-            24,
-            6.0
-        ),
-        createData(
-            "Cupcakesad fasdffsdasfdfsdsfdfsdfsdfdfsdfsdfsdfsdfsdsfd",
-            305,
-            3.7,
-            67,
-            4.3
-        ),
-        createData(
-            "Gingerbread af ffdsfds sfdfsa adfs afsdfsadfsdafdsfsadasfdfad s",
-            356,
-            16.0,
-            49,
-            3.9
-        )
+const SettingComponent =() => {
+    const columns = ["Name", "Title", "Location", "Age", "Salary"];
+
+    const data = [
+        ["Gabby George", "Business Analyst", "Minneapolis", 30, "$100,000"],
+        ["Aiden Lloyd", "Business Consultant", "Dallas", 55, "$200,000"],
+        ["Jaden Collins", "Attorney", "Santa Ana", 27, "$500,000"],
+        ["Franky Rees", "Business Analyst", "St. Petersburg", 22, "$50,000"],
+        ["Aaren Rose", "Business Consultant", "Toledo", 28, "$75,000"],
+        [
+            "Blake Duncan",
+            "Business Management Analyst",
+            "San Diego",
+            65,
+            "$94,000"
+        ],
+        ["Frankie Parry", "Agency Legal Counsel", "Jacksonville", 71, "$210,000"],
+        ["Lane Wilson", "Commercial Specialist", "Omaha", 19, "$65,000"],
+        ["Robin Duncan", "Business Analyst", "Los Angeles", 20, "$77,000"],
+        ["Mel Brooks", "Business Consultant", "Oklahoma City", 37, "$135,000"],
+        ["Harper White", "Attorney", "Pittsburgh", 52, "$420,000"],
+        ["Kris Humphrey", "Agency Legal Counsel", "Laredo", 30, "$150,000"],
+        ["Frankie Long", "Industrial Analyst", "Austin", 31, "$170,000"],
+        ["Brynn Robbins", "Business Analyst", "Norfolk", 22, "$90,000"],
+        ["Justice Mann", "Business Consultant", "Chicago", 24, "$133,000"],
+        [
+            "Addison Navarro",
+            "Business Management Analyst",
+            "New York",
+            50,
+            "$295,000"
+        ],
+        ["Jesse Welch", "Agency Legal Counsel", "Seattle", 28, "$200,000"],
+        ["Eli Mejia", "Commercial Specialist", "Long Beach", 65, "$400,000"],
+        ["Gene Leblanc", "Industrial Analyst", "Hartford", 34, "$110,000"],
+        ["Danny Leon", "Computer Scientist", "Newark", 60, "$220,000"],
+        ["Lane Lee", "Corporate Counselor", "Cincinnati", 52, "$180,000"],
+        ["Jesse Hall", "Business Analyst", "Baltimore", 44, "$99,000"],
+        ["Danni Hudson", "Agency Legal Counsel", "Tampa", 37, "$90,000"],
+        ["Terry Macdonald", "Commercial Specialist", "Miami", 39, "$140,000"],
+        ["Justice Mccarthy", "Attorney", "Tucson", 26, "$330,000"],
+        ["Silver Carey", "Computer Scientist", "Memphis", 47, "$250,000"],
+        ["Franky Miles", "Industrial Analyst", "Buffalo", 49, "$190,000"],
+        ["Glen Nixon", "Corporate Counselor", "Arlington", 44, "$80,000"],
+        [
+            "Gabby Strickland",
+            "Business Process Consultant",
+            "Scottsdale",
+            26,
+            "$45,000"
+        ],
+        ["Mason Ray", "Computer Scientist", "San Francisco", 39, "$142,000"]
     ];
+
+    const options = {
+        filterType: "dropdown",
+        responsive: "scroll"
+    };
+
     return (
-        <div>
-            <h1 className="title">Material UI - Responsive Table</h1>
-            <Paper className="container">
-                <Table>
-                    <TableHead>
-                        <TableRow>
-                            <TableCell>Dessert (100g serving)</TableCell>
-                            <TableCell numeric>Calories</TableCell>
-                            <TableCell numeric>Fat (g)</TableCell>
-                            <TableCell numeric>Carbs (g)</TableCell>
-                            <TableCell numeric>Protein (g)</TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {rows.map(({ id, name, calories, fat, carbs, protein }) => (
-                            <TableRow key={id}>
-                                <TableCell component="th" scope="row">
-                                    {name}
-                                </TableCell>
-                                <TableCell numeric>{calories}</TableCell>
-                                <TableCell numeric>{fat}</TableCell>
-                                <TableCell numeric>{carbs}</TableCell>
-                                <TableCell numeric>{protein}</TableCell>
-                            </TableRow>
-                        ))}
-                    </TableBody>
-                </Table>
-            </Paper>
+        <div style={{width: '100%'}}>
+            <MUIDataTable
+                title={"ACME Employee list"}
+                data={data}
+                columns={columns}
+                options={options}
+            />
         </div>
     );
 }
+
+export default SettingComponent;

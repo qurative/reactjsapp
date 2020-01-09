@@ -23,7 +23,6 @@ const useStyles = makeStyles(theme => ({
         height: "calc(100% - " + 60 * 2 + "px)", // subtract appbar height
         background: '#535454',
         color: '#fff',
-
     },
     drawerContent: {
         overflow: "auto",
