@@ -8,7 +8,7 @@ import Drawer from "@material-ui/core/Drawer";
 import IconExpandLess from '@material-ui/icons/ExpandLess';
 import IconExpandMore from '@material-ui/icons/ExpandMore';
 import IconDashboard from '@material-ui/icons/Dashboard';
-import IconShoppingCart from '@material-ui/icons/ShoppingCart';
+import IconSettings from '@material-ui/icons/Settings';
 import IconPeople from '@material-ui/icons/People';
 import IconBarChart from '@material-ui/icons/BarChart';
 import IconLibraryBooks from '@material-ui/icons/LibraryBooks';
@@ -100,12 +100,12 @@ const AdminLeftBar = (props) => {
                     <ListItem button
                               className={classes.menuItem}
                               component={Link}
-                              to="/settings"
+                              to="/admin/settings"
                     >
                         <ListItemIcon className={classes.menuItemIcon}>
-                            <IconShoppingCart />
+                            <IconSettings />
                         </ListItemIcon>
-                        <ListItemText primary="Settings" />
+                        <ListItemText primary="Manage Settings" />
                     </ListItem>
 
                     <ListItem button className={classes.menuItem}>

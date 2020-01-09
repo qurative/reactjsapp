@@ -16,6 +16,8 @@ import DashboardLayout from "./Layout/DashboardLayout";
 import AdminLayout from "./Layout/Admin/AdminLayout";
 import AdminLoginContainer from "./Admin/containers/Auth/AdminLoginContainer";
 import AdminDashboardContainer from "./Admin/containers/Dashboard/AdminDashboardContainer";
+import SettingsContainer from "./Admin/containers/Settings/SettingsContainer";
+
 import AdminLoginLayout from "./Layout/Admin/AdminLoginLayout";
 
 const AppRouter = () => (
@@ -29,6 +31,8 @@ const AppRouter = () => (
 
             <RootRouter exact path="/admin" layout={AdminLayout} component={AdminDashboardContainer} />
             <RootRouter exact path="/admin/login" layout={AdminLoginLayout} component={AdminLoginContainer} />
+            <RootRouter exact path="/admin/settings" layout={AdminLayout} component={SettingsContainer} />
+
             <RootRouter exact path="*" layout={AppLayout} component={Page404} />
         </Switch>
     </div>

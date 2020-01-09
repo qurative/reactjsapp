@@ -4,6 +4,8 @@ import { Provider } from "react-redux";
 import store from "./redux/store";
 
 import AppRouter from './AppRouter';
+/*import WebRouter from './Website/Router/Index';
+import AdminRouter from './Admin/Router/Index';*/
 import setAuthToken from "./utils/setAuthToken";
 import jwt_decode from "jwt-decode";
 import {logoutUser, setCurrentUser} from "./redux/actions/authActions";
@@ -32,6 +34,8 @@ function App() {
       <Provider store={store}>
         <BrowserRouter>
           <AppRouter />
+          {/*<WebRouter />
+          <AdminRouter />*/}
         </BrowserRouter>
       </Provider>
   );
